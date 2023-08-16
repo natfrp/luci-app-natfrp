@@ -1,0 +1,3 @@
+config natfrp 'main'
+	option enabled '0'
+	option remote_mgmt '1'

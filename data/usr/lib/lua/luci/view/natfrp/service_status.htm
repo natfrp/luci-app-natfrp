@@ -1,0 +1,19 @@
+<div class="cbi-section">
+    <div class="cbi-value">
+        <label class="cbi-value-title">状态</label>
+        <div class="cbi-value-field">
+            <div id="natfrp_status" class="cbi-checkbox">加载中</div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    XHR.poll(5, '<%=luci.dispatcher.build_url("admin/services/natfrp/status")%>', null, function (x, data) {
+        if (x.status !== 200) {
+            return;
+        }
+        document.getElementById('natfrp_status').innerHTML = data.running ?
+            '<b style="color: green">运行中, PID: ' + data.pid + '</b>' :
+            '<b style="color: red">已停止</b>';
+    });
+</script>

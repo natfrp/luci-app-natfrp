@@ -1,0 +1,10 @@
+Package: luci-app-natfrp
+Version: 3.0.0
+Depends: luci-compat
+License: AGPL-3.0-only
+Section: luci
+SourceDateEpoch: 1692164172
+Maintainer: iDea Leaper
+Architecture: all
+Installed-Size: 0
+Description: SakuraFrp 启动器 OpenWRT 软件包
