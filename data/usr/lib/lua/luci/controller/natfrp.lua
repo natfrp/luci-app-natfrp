@@ -17,10 +17,10 @@ function action_status()
 		running = false,
 	}
 
-	local data = luci.jsonc.parse(luci.util.exec("/etc/init.d/natfrp info"))
-	if type(data) == "table" and type(data.natfrp) == "table" and type(data.natfrp.instances) == "table" and type(data.natfrp.instances.main) == "table" then
-		result.running = data.natfrp.instances.main.running
-		result.pid = data.natfrp.instances.main.pid
+	local pid = luci.sys.exec("pidof natfrp-service")
+	if pid ~= "" then
+		result.running = true
+		result.pid = pid
 	end
 
 	http.prepare_content("application/json")
