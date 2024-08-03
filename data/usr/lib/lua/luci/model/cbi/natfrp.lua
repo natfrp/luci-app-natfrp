@@ -81,9 +81,9 @@ function o.validate(self, value)
 	return nil
 end
 
-o = s:option(Value, "webui_host", "监听地址", "不为 localhost 时必须配置 SSL 证书")
+o = s:option(Value, "webui_host", "监听地址", "需使用 HTTPS 进行访问, 默认监听所有接口")
 o:depends("webui", "1")
-o.default = "localhost"
+o.default = "0.0.0.0"
 o.rmempty = true
 
 o = s:option(Value, "webui_pass", "连接密码", "留空保留原来的密码, 最少 8 字符")
