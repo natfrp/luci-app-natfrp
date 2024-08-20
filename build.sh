@@ -26,11 +26,13 @@ build_arch() {
     rm -rf .tmp
 }
 
-chmod +x binary/natfrp_service_linux_amd64
-version=$(binary/natfrp_service_linux_amd64 -v)
-echo "service version: $version"
+chmod +x binary/*
+version_svc=$(binary/natfrp_service_linux_amd64 -v)
+version_frpc=$(binary/frpc_linux_amd64 -v)
+echo "service version: $version_svc"
+echo "frpc version: $version_frpc"
 
-sed -i -e "s/^Version: .*/Version: $version/" control/control
+sed -i -e "s/^Version: .*/Version: $version_svc-$version_frpc/" control/control
 
 if [ "$1" != "" ]; then
     build_arch $1
