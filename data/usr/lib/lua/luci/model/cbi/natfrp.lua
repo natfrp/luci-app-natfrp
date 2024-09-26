@@ -4,6 +4,20 @@ local fs = require "nixio.fs"
 
 local m, s, o
 
+local arch_mapping = {
+	["i386"] = "386",
+	["i686"] = "386",
+	["x86_64"] = "amd64",
+	["arm"] = "arm_garbage",
+	["armel"] = "arm_garbage",
+	["armv7l"] = "armv7 或 arm_garbage (请自行测试)",
+	["armhf"] = "armv7 或 arm_garbage (请自行测试)",
+	["aarch64"] = "arm64",
+	["armv8l"] = "arm64",
+	["mips"] = "mips 或 mipsle (请自行测试)",
+	["mips64"] = "mips64 或 mips64le (请自行测试)",
+}
+
 local function service_version()
 	local file = "/usr/bin/natfrp-service"
 	if not fs.stat(file) then
@@ -16,7 +30,17 @@ local function service_version()
 
 	local ver = luci.util.exec("NATFRP_SERVICE_WD=/tmp " .. file .. " -v")
 	if not ver or ver == "" then
-		return '<b style="color: red">无法获取服务版本, 请检查安装的架构是否正确</b>'
+		local arch = luci.util.exec("uname -m")
+		if not arch or arch == "" then
+			arch = "未知"
+		end
+		arch = arch:gsub("\n", "")
+
+		local arch_mapped = arch_mapping[arch]
+		if arch_mapped then
+			arch = arch .. ', 应使用的软件包: ' .. arch_mapped
+		end
+		return '<b style="color: red">无法获取服务版本, 请检查安装的架构是否正确<br>当前系统架构: ' .. arch .. '</b>'
 	end
 	return '服务版本: ' .. ver
 end

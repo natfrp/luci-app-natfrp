@@ -27,7 +27,7 @@ start_instance() {
 	# Check executable & cwd
 	test -d "$SERVICE_CWD" || mkdir -p "$SERVICE_CWD"
 
-	NATFRP_SERVICE_WD=$SERVICE_CWD $SERVICE_PATH --help |grep -q natfrp-service
+	NATFRP_SERVICE_WD=$SERVICE_CWD $SERVICE_PATH --help | grep -q natfrp-service
 	if [ $? != 0 ]; then
 		log_err "invalid executable, make sure you installed correct arch [$(uname -m)]"
 		return 1
@@ -98,7 +98,7 @@ start_instance() {
 		fi
 	fi
 
-	json_dump > "$cfg_json"
+	json_dump >"$cfg_json"
 	json_cleanup
 
 	# Configure procd
@@ -118,6 +118,12 @@ start_instance() {
 		"NATFRP_UPDATE_OVERRIDE=launcher-openwrt"
 
 	procd_close_instance
+}
+
+reload_service() {
+	log_info "restarting natfrp-service"
+	stop
+	start
 }
 
 service_triggers() {
