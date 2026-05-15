@@ -840,14 +840,16 @@ _FRPC_PATTERNS = ['frpc_linux_']
 # APKv3 packages use system/Alpine-style names (x86_64, aarch64, ...).
 _BINARY_TO_PKG_ARCH = {
     'amd64': 'x86_64',
-    'arm64': 'aarch64',
-    '386': 'x86',
-    'arm': 'armv7',
-    'mips': 'mips',
-    'mipsle': 'mipsel',
-    'mips64': 'mips64',
-    'mips64le': 'mips64el',
-    'riscv64': 'riscv64',
+    'arm64': 'aarch64_generic',
+    '386': 'i386_pentium-mmx',
+    'armv7': 'arm_cortex-a7',
+    'arm_garbage': 'arm_cortex-a5_vfpv4',
+    'mips': 'mips_24kc',
+    'mipsle': 'mipsel_24kc',
+    'mips64': 'mips64_mips64r2',
+    'mips64le': 'mips64el_mips64r2',
+    'riscv64': 'riscv64_generic',
+    'loong64': 'loongarch64_generic',
 }
 _PKG_TO_BINARY_ARCH = {v: k for k, v in _BINARY_TO_PKG_ARCH.items()}
 
